@@ -1,0 +1,18 @@
+/* Define styles for the element with class 'd' when it is hovered */
+.a:hover .d {
+  height: 210px;
+  background-color: rgba(0, 0, 0, 0.5); /* 25% opacity black */
+  transition: 0.5s ease-in-out;
+  visibility: visible;
+}
+
+.d .content {
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.8s ease-in-out;
+}
+
+.a:hover .d .content {
+  visibility: visible;
+  opacity: 1;
+}

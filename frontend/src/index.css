@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.containerLanding {
+  width: 100%;
+  height: 100%;
+}
+
+.containerLanding img {
+  /* position: absolute; */
+  mix-blend-mode: screen;
+}
