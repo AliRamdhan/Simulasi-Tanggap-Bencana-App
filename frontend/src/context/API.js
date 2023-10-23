@@ -8,7 +8,7 @@ export const API = {
       return error.message;
     }
   },
-  getArticlesByTopic : async (articleTopic) => {
+  getArticlesByTopic: async (articleTopic) => {
     try {
       const response = await axios.get(
         `http://localhost:5000/api/v1/articles/topic/${articleTopic}`
@@ -74,6 +74,16 @@ export const API = {
         `http://localhost:5000/api/v1/disaster/${simulationId}`
       );
       return response.data.DisasterDetails;
+    } catch (error) {
+      return error.message;
+    }
+  },
+  getSimulationsOptions: async (simulationId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/disaster/option/all/${simulationId}`
+      );
+      return response.data.OptionChoice;
     } catch (error) {
       return error.message;
     }

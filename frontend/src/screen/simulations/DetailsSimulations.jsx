@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dua from "../../images/b.jpg";
 import Tiga from "../../images/nonalam.png";
 import { API } from "../../context/API";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 export const DetailsSimulations = () => {
   const [simulation, setSimulation] = useState("");
   const { simulasiName, simulasiId } = useParams();
@@ -68,12 +68,14 @@ export const DetailsSimulations = () => {
                 Tekan tombol 'Mulai Simulasi' sekarang!"
               </div>
               <div className="w-full text-center p-8">
-                <button
-                  type="button"
-                  className="py-2.5 px-8 mr-2 mb-2 text-xl font-medium text-gray-900 rounded-lg bg-gray-700 border-2 text-white tracking-widest font-sans"
-                >
-                  Mulai Simulasi
-                </button>
+                <Link to={`/play/${simulasiName}/${simulasiId}`}>
+                  <button
+                    type="button"
+                    className="py-2.5 px-8 mr-2 mb-2 text-xl font-medium text-gray-900 rounded-lg bg-gray-700 border-2 text-white tracking-widest font-sans"
+                  >
+                    Mulai Simulasi
+                  </button>
+                </Link>
               </div>
             </div>
           </>
