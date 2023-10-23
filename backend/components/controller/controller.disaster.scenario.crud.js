@@ -26,14 +26,9 @@ const getDisasterOfType = async (req, res) => {
   }
 };
 
-
-
 const getDetailsOneDisaster = async (req, res) => {
   try {
-    const disaster = await Disaster.findById(req.params.disasterId).populate(
-      "disasterInitialOptions",
-      "optionText optionOutcome"
-    );
+    const disaster = await Disaster.findById(req.params.disasterId);
     return res
       .status(200)
       .json({ message: "Details disaster", DisasterDetails: disaster });
@@ -43,12 +38,7 @@ const getDetailsOneDisaster = async (req, res) => {
 };
 
 const createOneDisaster = async (req, res) => {
-  const {
-    disasterTitle,
-    disasterDescription,
-    disasterInitialOptions,
-    disasterType,
-  } = req.body;
+  const { disasterTitle, disasterDescription, disasterType } = req.body;
   const disasterPicture = req.file;
   try {
     const disasterExist = await Disaster.findOne({
@@ -72,17 +62,17 @@ const createOneDisaster = async (req, res) => {
       disasterType: disasterTypeSimulations,
     }).save();
 
-    if (disasterInitialOptions) {
-      const disasterInitialOptionsExist = await OptionScenario.findOne({
-        _id: disasterInitialOptions,
-      });
-      if (!disasterInitialOptionsExist) {
-        return res.status(404).json({ message: "Option was not found" });
-      } else {
-        disaster.disasterInitialOptions = disasterInitialOptions;
-        await disaster.save();
-      }
-    }
+    // if (disasterInitialOptions) {
+    //   const disasterInitialOptionsExist = await OptionScenario.findOne({
+    //     _id: disasterInitialOptions,
+    //   });
+    //   if (!disasterInitialOptionsExist) {
+    //     return res.status(404).json({ message: "Option was not found" });
+    //   } else {
+    //     disaster.disasterInitialOptions = disasterInitialOptions;
+    //     await disaster.save();
+    //   }
+    // }
     return res.status(200).json({
       message: "Disaster was created succesfully",
       Disaster: disaster,
@@ -92,11 +82,11 @@ const createOneDisaster = async (req, res) => {
   }
 };
 
-const createOptionOneDisaster = async (req, res) => {};
-
 const getAllListOptionChoice = async (req, res) => {
   try {
-    const optionChoice = await OptionScenario.find();
+    const optionChoice = await OptionScenario.find({
+      optionDisaster: req.params.disasterId,
+    }).populate("nextOptions", "optionText");
     return res
       .status(200)
       .json({ message: "List Option Choice All", OptionChoice: optionChoice });
@@ -106,13 +96,18 @@ const getAllListOptionChoice = async (req, res) => {
 };
 
 const createOneOptionChoiceSchema = async (req, res) => {
-  const { optionText, optionTextOutcome } = req.body;
+  const { optionText, optionTextOutcome, optionDisaster } = req.body;
   const optionPictureOutcome = req.file;
   try {
+    const disaster = await Disaster.findOne({ _id: optionDisaster });
+    if (!disaster) {
+      res.status(404).json({ message: "Disaster not found" });
+    }
     const options = await new OptionScenario({
       optionText: optionText,
       optionTextOutcome: optionTextOutcome,
       optionPictureOutcome: optionPictureOutcome.filename,
+      optionDisaster: disaster,
     }).save();
     return res.status(200).json({
       message: "Option scenario created succesfully",

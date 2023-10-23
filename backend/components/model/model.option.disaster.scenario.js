@@ -11,6 +11,10 @@ const optionSchema = mongoose.model("optionsScenario", {
   optionPictureOutcome: {
     type: String,
   },
+  optionDisaster: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "disasterScenario", // Reference to the Choice collection
+  },
   nextOptions: [
     {
       type: mongoose.Schema.Types.ObjectId,

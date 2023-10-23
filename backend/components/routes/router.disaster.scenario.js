@@ -17,7 +17,7 @@ router.post(
   upload.uploadDisaster.single("disasterPicture"),
   createOneDisaster
 );
-router.get("/disaster/option/all", getAllListOptionChoice);
+router.get("/disaster/option/all/:disasterId", getAllListOptionChoice);
 router.post(
   "/disaster/option/create",
   upload.uploadOutcome.single("optionPictureOutcome"),

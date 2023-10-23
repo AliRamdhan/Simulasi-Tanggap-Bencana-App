@@ -15,12 +15,12 @@ const disasterSchema = mongoose.model("disasterScenario", {
   disasterPicture: {
     type: String,
   },
-  disasterInitialOptions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "optionsScenario", // Reference to the Choice collection
-    },
-  ],
+  // disasterInitialOptions: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "optionsScenario", // Reference to the Choice collection
+  //   },
+  // ],
 });
 
 module.exports = disasterSchema;
